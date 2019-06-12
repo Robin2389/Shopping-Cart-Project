@@ -1,0 +1,21 @@
+.card img {
+    max-height: 150px;
+}
+
+.card .card-text {
+    color: gray;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.top-buffer {
+    margin-top: 50px;
+}
+
+.i-am-centered {
+    margin: auto;
+    max-width: 800px;
+}
