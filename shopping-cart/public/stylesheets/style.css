@@ -15,7 +15,16 @@
     margin-top: 50px;
 }
 
+.big-top-buffer {
+    margin-top: 100px;
+}
+
 .i-am-centered {
     margin: auto;
     max-width: 800px;
+}
+
+.center-single-line {
+    margin: auto;
+    max-width: 200px
 }
