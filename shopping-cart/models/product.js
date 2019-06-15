@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-//var Schema = mongoose.Schema;
+//var Schema = mongoose.Schema; this does not work 
 
 var schema = mongoose.Schema({
     imagePath: {type: String, required: true},

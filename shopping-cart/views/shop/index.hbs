@@ -1,92 +1,24 @@
-<div class="i-am-centered">
-  <div class="clearfix">
-    <div class = "row">
-      <div class = "col-sm-6 col-md-4">
-        <div class="card" style="width: 18rem;">
-          <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-          <div class="img-responsive">
-            <h4 class="card-title">Pop </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-            <div class="clearfix"> 
-              <div class="price pull-left">$10</div>
-              <a href="#" class="btn btn-success pull-right">Buy</a>
+{{# each products }}
+  
+      <div class = "row top-buffer">
+        {{# each this}}
+          <div class = "col-sm-6 col-md-4">
+            <div class="card" style="width: 18rem;">
+              <img src="{{ this.imagePath }}" alt="...">
+              <div class="img-responsive">
+                <h4 class="card-title">{{ this.title }} </h4>
+                <p class="card-text">{{ this.description }}.</p>
+                <div class="clearfix"> 
+                  <div class="price pull-left">$10</div>
+                  <a href="#" class="btn btn-success pull-right">Buy</a>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class = "col-sm-6 col-md-4">
-        <div class="card" style="width: 18rem;">
-          <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-          <div class="img-responsive">
-            <h4 class="card-title">Pop </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-            <div class="clearfix"> 
-              <div class="price pull-left">$10</div>
-              <a href="#" class="btn btn-success pull-right">Buy</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class = "col-sm-6 col-md-4">
-        <div class="card" style="width: 18rem;">
-          <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-          <div class="img-responsive">
-            <h4 class="card-title">Pop </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-            <div class="clearfix"> 
-              <div class="price pull-left">$10</div>
-              <a href="#" class="btn btn-success pull-right">Buy</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          </div >
+        {{/each}}
+       
   </div>
-</div>
-
-<div class="i-am-centered">
-  <div class = "row top-buffer">
-    <div class = "col-sm-6 col-md-4">
-      <div class="card" style="width: 18rem;">
-        <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-        <div class="img-responsive">
-          <h4 class="card-title">Pop </h4>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-          <div class="clearfix"> 
-            <div class="price pull-left">$10</div>
-            <a href="#" class="btn btn-success pull-right">Buy</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class = "col-sm-6 col-md-4">
-      <div class="card" style="width: 18rem;">
-        <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-        <div class="img-responsive">
-          <h4 class="card-title">Pop </h4>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-          <div class="clearfix"> 
-            <div class="price pull-left">$10</div>
-            <a href="#" class="btn btn-success pull-right">Buy</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class = "col-sm-6 col-md-4">
-      <div class="card" style="width: 18rem;">
-        <img src="https://target.scene7.com/is/image/Target/GUEST_2233bb5e-de0e-4669-a05e-455421d9ac47?wid=488&hei=488&fmt=pjpeg" alt="...">
-        <div class="img-responsive">
-          <h4 class="card-title">Pop </h4>
-          <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ducimus magnam id quidem mollitia! Quasi perspiciatis iure, ea veniam autem at impedit eligendi maxime est. Ducimus repellendus a fugiat eveniet.</p>
-          <div class="clearfix"> 
-            <div class="price pull-left">$10</div>
-            <a href="#" class="btn btn-success pull-right">Buy</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{/each}}
 
 <div class="center-single-line">
   <div class = "row big-top-buffer">
