@@ -3,6 +3,7 @@ var passport = require('passport');
 var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
 
+
 // Then we store the user in the session and serialize it by ID.
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -31,35 +32,88 @@ passport.use('local.signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function(req, email, password, done) {
-    User.findOne({'email': email}, function(err, user) {
-        // Error
-        if (err) {
-            return done(err);
-        }
+        // Here we validate the parameters: that it is not empty, and that it is an email
+        req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+        req.checkBody('password', 'Invalid password').notEmpty().isLength({min:4});
         
-        // User already exists, must send flash message.
-        if (user) {
-            return done(null, false, {message: 'Email is already in use.'});
+        // Now we implement the errors if they occur:
+        // Errors come with parent fields and a message field. We get the message field with error.msg
+        var errors = req.validationErrors();
+        if(errors) {
+            var messages = [];
+            errors.forEach(function(error) {
+                messages.push(error.msg);  
+            });
+            // Using the flash middelware, we can send our messages to the view.
+            return done(null, false, req.flash('error', messages));        
         }
-        /* If we pass both checks:
-            1. No errors, 2. User doesn't already exist
-            Than now we can create the new user */
-        var newUser = new User();
-        newUser.email = email;
 
-        // Now we are going to add the password encryption info in /models/user.js
-
-        /* Now that we have added the password information into user.js, we
-        can incorporate that here */
-        newUser.password = newUser.encryptPassword(password);
-        newUser.save(function(err, result) {
+        User.findOne({'email': email}, function(err, user) {
+            // Error
             if (err) {
-                return done(err);
+            return done(err);
             }
+        
+            // User already exists, must send flash message.
+            if (user) {
+                return done(null, false, {message: 'Email is already in use.'});
+            }
+            /* If we pass both checks:
+                1. No errors, 2. User doesn't already exist
+                Than now we can create the new user */
+            var newUser = new User();
+            newUser.email = email;
+
+            // Now we are going to add the password encryption info in /models/user.js
+
+            /* Now that we have added the password information into user.js, we
+            can incorporate that here */
+            newUser.password = newUser.encryptPassword(password);
+            newUser.save(function(err, result) {
+                if (err) {
+                    return done(err);
+                }
             return done(null, newUser);
-        });
+            });
     })
 }));
 
 /* Now that we have created our strategy in passport.js, we have to figure out 
     how to apply this strategy. To do this we will have to edit /routes/index.js */
+
+
+
+    // here we sign in
+passport.use('local.signin', new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+}, function(req, email, password, done) {
+    req.checkBody('email', 'Invalid email').notEmpty().isEmail();
+    req.checkBody('password', 'Invalid password').notEmpty();
+    var errors = req.validationErrors();
+    if(errors) {
+        var messages = [];
+        errors.forEach(function(error) {
+            messages.push(error.msg);  
+        });
+        // Using the flash middelware, we can send our messages to the view.
+        return done(null, false, req.flash('error', messages));        
+    }
+
+    User.findOne({'email': email}, function(err, user) {
+        if (err) {
+        return done(err);
+        }
+        // User already exists, must send flash message.
+        if (!user) {
+            return done(null, false, {message: 'Invalid email address'});
+        }
+        if (!user.validPassword(password)) {
+            return done(null, false, {message: 'Invalid password'});
+        }
+        
+        return done(null, user);
+    })
+}));
+    

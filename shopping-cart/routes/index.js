@@ -1,12 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
-var passport = require('passport');
+var Cart = require('../models/cart');
 
 var Product = require('../models/product');
-
-var csrfProtection = csrf();
-router.use(csrfProtection);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -20,46 +16,31 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/user/signup', function(req, res, next) {
+// We route to our /shop/index.hbs and we include an id
+router.get('/add-to-cart/:id', function(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {items: {}});
 
-      /*  Original Code: 
-  res.render('user/signup', {csrfToken: req.csrfToken()});
-});   */
-
-// Altered Code to include messages:
-  var messages = req.flash('error');
-  res.render('user/signup', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+  Product.findById(productId, function(err, product) {
+    if (err) {
+      return res.redirect('/');
+    }
+    cart.add(product, product.id); // we add the product to the cart
+    req.session.cart = cart; // we store the product in the cart
+    console.log(req.session.cart); 
+    res.redirect('/'); // redirect to the product page
+  });
 });
 
-
-
-/* We now need to re-edit the router code to use our passport.js strategy.
-    In order to do this, we no longer redirect to the '/' route, instead we 
-    will introduce the passport.js file function. So let's compare the old code
-    with the new code.
-*/
-
-// The old router code:
-/* 
-router.post('/user/signup', function(req, res, next) {
-  res.redirect('/');
+// Shopping cart
+router.get('/shopping-cart', function(req, res, next) {
+  if (!req.session.cart) {
+    return res.render('shop/shopping-cart', {products: null});
+  }
+  var cart = new Cart(req.session.cart);
+  res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
 });
-*/
 
-// The new router code:
-router.post('/user/signup', passport.authenticate('local.signup', {
-  successRedirect: '/user/profile',
-  failureRedirect: '/user/signup',
-  failureFlash: true
-}));
-/* But now this code needs to be recognized by password.js, so we have to write
-code to import this file index.js into app.js. So let's go to app.js. */
-
-
-//We need to also add our profile route
-router.get('/user/profile', function(req, res, next) {
-  res.render('user/profile')
-});
 
 module.exports = router;
 

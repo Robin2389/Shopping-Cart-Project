@@ -2,15 +2,15 @@
   
       <div class = "row top-buffer">
         {{# each this}}
-          <div class = "col-sm-6 col-md-4">
+          <div class = "col-sm-6 col-md-3 col-md-offset-1">
             <div class="card" style="width: 18rem;">
               <img src="{{ this.imagePath }}" alt="...">
               <div class="img-responsive">
                 <h4 class="card-title">{{ this.title }} </h4>
                 <p class="card-text">{{ this.description }}.</p>
                 <div class="clearfix"> 
-                  <div class="price pull-left">$10</div>
-                  <a href="#" class="btn btn-success pull-right">Buy</a>
+                  <div class="price pull-left">${{ this.price }}</div>
+                  <a href="/add-to-cart/{{ this._id }}" class="btn btn-success pull-right">Buy</a>
                 </div>
               </div>
             </div>
@@ -19,14 +19,3 @@
        
   </div>
 {{/each}}
-
-<div class="center-single-line">
-  <div class = "row big-top-buffer">
-    <h1>My travels</h1> 
-  </div>
-</div>
-
-<div class = "row top-buffer"></div>
-<div id="mapdiv" style="width: 1200px; height: 450px;"></div>
-
-<div class = "row top-buffer"></div>
